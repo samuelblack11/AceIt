@@ -17,62 +17,72 @@ struct CategoryForm: View {
     @EnvironmentObject var appState: AppState
     
     var body: some View {
-        CustomNavigationBar(onBackButtonTap: {appState.currentScreen = .mainMenu}, titleContent: .text("Create a Category"))
-        Form {
-            Section(header: Text("Category Details")) {
-                TextField("Category Name", text: $categoryName)
-                    .disabled((isSubmitting))
-                TextEditor(text: $description)
-                    .disabled((isSubmitting))
-                    .frame(height: 100)
-                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray, lineWidth: 1))
-                    .onTapGesture {
-                        if !didEditDescription {
-                            description = ""
-                            didEditDescription = true
+        VStack {
+            CustomNavigationBar(onBackButtonTap: {appState.currentScreen = .mainMenu}, titleContent: .text("Create a Category"))
+            Form {
+                Section(header: Text("Category Details")) {
+                    TextField("Category Name", text: $categoryName)
+                        .disabled((isSubmitting))
+                    TextEditor(text: $description)
+                        .disabled((isSubmitting))
+                        .frame(height: 100)
+                        .foregroundColor(didEditDescription ? .primary : .gray)
+                       // .overlay(
+                       //     RoundedRectangle(cornerRadius: 5)
+                       //         .stroke(Color.gray, lineWidth: 1)
+                       // )
+                        .onTapGesture {
+                            if !didEditDescription {
+                                description = ""
+                                didEditDescription = true
+                            }
                         }
-                    }
-            }
-            Section {
-                Button(action: submit) {Text("Submit")}
-                    .disabled(isSubmitting)
-            }
-        }
-        .overlay(
-            Group {
-                if isSubmitting {
-                    ProgressView()
-                        .scaleEffect(1.5, anchor: .center)
-                        .padding()
-                    //.background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+                }
+                Section {
+                    Button(action: submit) {Text("Submit")}
+                        .disabled(isSubmitting)
                 }
             }
-        )
+            .overlay(
+                Group {
+                    if isSubmitting {
+                        ProgressView()
+                            .scaleEffect(1.5, anchor: .center)
+                            .padding()
+                        //.background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+                    }
+                }
+            )
+        }
     }
     
     func submit() {
         isSubmitting = true
         print("Category Name: \(categoryName)")
         print("Description: \(description)")
-        OpenAI.shared.generateStack(category: categoryName, description: description) {
-            response, error in
-            defer { isSubmitting = false; appState.currentScreen = .mainMenu }  // Set to false when done, using defer to ensure it's called
+        
+        OpenAI.shared.generateStack(category: categoryName, description: description) { (response: [[String: String]]?, error: Error?) in
+            
+            //response, error in
+            defer { isSubmitting = false; appState.currentScreen = .mainMenu }
+            
             print("-----")
             print(response)
             print("-----")
-            guard let unwrappedResponse = response, let dictForCore = parseResponse(unwrappedResponse) else {
-                return
+            
+            guard let unwrappedResponse = response else { return }
+            let dictForCore = parseResponse(unwrappedResponse)
+            if let unwrappedDict = dictForCore {
+                for (key, val) in unwrappedDict {
+                    print("***")
+                    print(key)
+                    print(val)
+                    saveEntryToCore(prompt: key, answer: val)
+                }
             }
-            for (key, val) in dictForCore {
-                print("***")
-                print(key)
-                print(val)
-                saveEntryToCore(prompt: key, answer: val)
-            }
-            //isSubmitting = false
         }
-        
     }
+
     
     func saveEntryToCore(prompt: String, answer: String) {
         let flashCard = FlashCard(context: viewContext)
@@ -83,23 +93,15 @@ struct CategoryForm: View {
         catch {print("Error saving dummy item: \(error)")}
     }
     
-    func parseResponse(_ response: String) -> [String: String]? {
-        let pattern = "\"([^\"]+)\": \"([^\"]+)\""
-        let regex = try? NSRegularExpression(pattern: pattern, options: [])
-        
-        let matches = regex?.matches(in: response, options: [], range: NSRange(location: 0, length: response.count))
-        
+    func parseResponse(_ response: [[String: String]]) -> [String: String]? {
         var parsedDict: [String: String] = [:]
-        
-        matches?.forEach {
-            if let keyRange = Range($0.range(at: 1), in: response),
-               let valueRange = Range($0.range(at: 2), in: response) {
-                let key = String(response[keyRange])
-                let value = String(response[valueRange])
+
+        for entry in response {
+            if let key = entry["prompt"], let value = entry["answer"] {
                 parsedDict[key] = value
             }
         }
-        
+
         return parsedDict.isEmpty ? nil : parsedDict
     }
 

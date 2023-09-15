@@ -14,8 +14,7 @@ class OpenAI {
 
     private let baseURL = "https://api.openai.com/v1/chat/completions"
     
-
-    func generateStack(category: String, description: String, completion: @escaping (String?, Error?) -> Void) {
+    func generateStack(category: String, description: String, completion: @escaping ([[String: String]]?, Error?) -> Void) {
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
             completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
             return
@@ -25,10 +24,17 @@ class OpenAI {
         request.httpMethod = "POST"
         request.addValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.addValue("json", forHTTPHeaderField: "response_format")
 
         let systemInstruction = "You are a helpful assistant."
-        let userQuestion = "Given the category: \(category), create a series of dictionary entries that the user may wish to be quizzed on about that category. Each key/value pair should consist of a prompt or question, and the corresponding answer. Here are some additional details that the user would like you to consider for this task: \(description). Please format the dictionary entries within a list, within this style of brackets: []. Each key and value should be in quotations. Each key should be followed by a colon and each value should be followed by a comma. Ensure that the only time the characters [ and ] are in your response are at the start and end of the dictionary."
+        let userQuestion = """
+        Given the category: \(category), create a JSON formatted list of dictionary entries for quizzing. Each dictionary should have a 'prompt' key for the question and an 'answer' key for its corresponding answer, considering the details: \(description). The response should look like this:
+        [
+            {"prompt": "Question 1?", "answer": "Answer 1"},
+            {"prompt": "Question 2?", "answer": "Answer 2"},
+            ...
+        ]
+        """
+        
         let messages = [
             ["role": "system", "content": systemInstruction],
             ["role": "user", "content": userQuestion]
@@ -64,20 +70,15 @@ class OpenAI {
                     return
                 }
                 do {
-                    if let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                        if let errorDetail = jsonResponse["error"] as? String {
-                            print("OpenAI Error: \(errorDetail)")
-                            completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDetail]))
-                            return
-                        }
-                        
-                        if let responses = jsonResponse["choices"] as? [[String: Any]],
-                           let assistantMessage = responses.first?["message"] as? [String: Any],
-                           let text = assistantMessage["content"] as? String {
-                            completion(text.trimmingCharacters(in: .whitespacesAndNewlines), nil)
-                        } else {
-                            completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error parsing response"]))
-                        }
+                    if let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                       let responses = jsonResponse["choices"] as? [[String: Any]],
+                       let assistantMessage = responses.first?["message"] as? [String: Any],
+                       let text = assistantMessage["content"] as? String,
+                       let parsedData = text.data(using: .utf8),
+                       let parsedResponse = try? JSONSerialization.jsonObject(with: parsedData) as? [[String: String]] {
+                        completion(parsedResponse, nil)
+                    } else {
+                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error parsing response"]))
                     }
                 } catch {
                     completion(nil, error)
@@ -87,5 +88,8 @@ class OpenAI {
         
         task.resume()
     }
+
+    
+    
 
 }

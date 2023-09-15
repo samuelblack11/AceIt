@@ -22,6 +22,8 @@
 		C2E08FA72AB28FFF0014AE7C /* MyStacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */; };
 		C2E08FA92AB290070014AE7C /* NewStacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FA82AB290070014AE7C /* NewStacks.swift */; };
 		C2E08FAC2AB292B00014AE7C /* AutoGenStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */; };
+		C2E08FB12AB3D58E0014AE7C /* FlashCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */; };
+		C2E08FB42AB3DAB70014AE7C /* AlertViewMod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStacks.swift; sourceTree = "<group>"; };
 		C2E08FA82AB290070014AE7C /* NewStacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStacks.swift; sourceTree = "<group>"; };
 		C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoGenStack.swift; sourceTree = "<group>"; };
+		C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardListView.swift; sourceTree = "<group>"; };
+		C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewMod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 				C2E08FA42AB28E6D0014AE7C /* MainMenu.swift */,
 				C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */,
 				C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */,
+				C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */,
+				C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */,
 				C2E08FA82AB290070014AE7C /* NewStacks.swift */,
 			);
 			path = FlashCards;
@@ -181,9 +187,11 @@
 				C2E08FAC2AB292B00014AE7C /* AutoGenStack.swift in Sources */,
 				C2E08FA52AB28E6D0014AE7C /* MainMenu.swift in Sources */,
 				C227B1E92AB2825600F6A967 /* FlashCard+CoreDataProperties.swift in Sources */,
+				C2E08FB12AB3D58E0014AE7C /* FlashCardListView.swift in Sources */,
 				C25907F32A928CA70034CD22 /* OpenAI.swift in Sources */,
 				C2E08FA92AB290070014AE7C /* NewStacks.swift in Sources */,
 				C25907E32A9283960034CD22 /* ContentView.swift in Sources */,
+				C2E08FB42AB3DAB70014AE7C /* AlertViewMod.swift in Sources */,
 				C25907E12A9283960034CD22 /* FlashCards.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

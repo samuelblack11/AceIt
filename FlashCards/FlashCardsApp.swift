@@ -11,12 +11,14 @@ import SwiftUI
 struct FlashCardsApp: App {
     let persistenceController = PersistenceController.shared
     @StateObject var appState = AppState.shared
+    @StateObject var alertVars = AlertVars.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(appState)
+                .environmentObject(alertVars)
         }
     }
 }

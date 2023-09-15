@@ -13,101 +13,154 @@ struct MyStacks: View {
     // In your actual implementation, you'd replace this with data fetched from Core Data.
     @Environment(\.managedObjectContext) private var viewContext
     @State private var distinctCategories: [String] = []
+    @EnvironmentObject var appState: AppState
+    @State private var showFlashCard: Bool = false
+    @State private var selectedCategory: String?
+    @State private var chosenStack: [FlashCard] = []
+    @EnvironmentObject var alertVars: AlertVars
+    @State private var stackToDelete: String = ""
 
     var body: some View {
-        Group {
-            if distinctCategories.isEmpty {
-                Text("You haven't created any stacks yet")
-                    .font(.title)
-                    .foregroundColor(.gray)
-                    .padding()
-            } else {
-                let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
-                ScrollView {
-                    LazyVGrid(columns: gridLayout, spacing: 20) {
-                        ForEach(distinctCategories, id: \.self) { stack in
-                            VStack {
-                                Image(systemName: "square.stack")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding()
-                                    .background(Color.gray)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                    .shadow(radius: 10)
-                                Text(stack)
+        VStack {
+            CustomNavigationBar(onBackButtonTap: {appState.currentScreen = .mainMenu}, titleContent: .text("My Stacks"))
+            Group {
+                if distinctCategories.isEmpty {
+                    Text("You haven't created any stacks yet")
+                        .font(.title)
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
+                    ScrollView {
+                        LazyVGrid(columns: gridLayout, spacing: 20) {
+                            ForEach(distinctCategories, id: \.self) { stack in
+                                VStack {
+                                    Image(systemName: "square.stack")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding()
+                                        .background(Color.gray)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                                        .shadow(radius: 10)
+                                        .onTapGesture {
+                                            self.selectedCategory = stack
+                                            if let validStack = fetchFlashCards(withCategory: stack) {
+                                                chosenStack = validStack
+                                                self.showFlashCard = true
+                                            }
+                                        }
+                                    Text(stack)
+                                }
+                                .padding()
+                                .contextMenu {
+                                    Button(action: {
+                                        // Present the CardListView (this is already done with tap)
+                                    }) {
+                                        Label("View Cards", systemImage: "eye.fill")
+                                    }
+                                    Button(action: {
+                                        stackToDelete = stack
+                                        alertVars.alertType = .verifyStackDelete
+                                        alertVars.activateAlert = true
+                                    }) {
+                                        Label("Delete Stack", systemImage: "trash.fill")
+                                    }
+                                    .foregroundColor(.red)
+                                }
                             }
-                            .padding()
+                        }
+                        .sheet(isPresented: $showFlashCard) {
+                            FlashCardListView(flashCards: chosenStack)
                         }
                     }
                 }
             }
+            .onAppear {fetchDistinctCategories()}
         }
-        .onAppear {fetchDistinctCategories()}
+        .modifier(AlertViewMod(showAlert: alertVars.activateAlertBinding, activeAlert: alertVars.alertType, alertDismissAction: {self.deleteCards(forCategory: stackToDelete) { didDelete in fetchAllDistinctCategories()}}))
     }
+    
     private func fetchDistinctCategories() {
-        if let results = fetchDistinctValues() {
-            var allCategories: [String] = []
-
-            // Iterate over each dictionary and add the values to our list
-            for result in results {
-                allCategories.append(contentsOf: result.values.compactMap { $0 as? String })
-            }
-
-            // Filter out "NaN" and duplicates
-            self.distinctCategories = Array(Set(allCategories.filter { $0 != "NaN" }))
-        }
+        let results = fetchAllDistinctCategories()
+        self.distinctCategories = Array(results)
     }
+    
 }
 
-
 extension MyStacks {
-    func loadCards() -> [FlashCard] {
-        let request = FlashCard.createFetchRequest()
-        //let sort = NSSortDescriptor(key: "date", ascending: false)
-        //request.sortDescriptors = [sort]
-        var coreProducts: [FlashCard] = []
-        do {coreProducts = try viewContext.fetch(request)}
-        catch {print("Fetch failed")}
-        return coreProducts
-    }
     
-    func deleteProduct(product: FlashCard) {
-        do {viewContext.delete(product);try viewContext.save()}
-        catch {}
-    }
-    
-    func deleteAllProducts() {
-        let request = FlashCard.createFetchRequest()
-        var products: [FlashCard] = []
-        do {products = try viewContext.fetch(request); for product in products {deleteProduct(product: product)}}
-        catch{}
-    }
-    
-    func fetchDistinctValues() -> [[String: Any]] {
+    func fetchFlashCards(withCategory category: String) -> [FlashCard]? {
         let fetchRequest = FlashCard.createFetchRequest()
-        
-        // Specify that we want to fetch distinct values for the provided properties
-        fetchRequest.propertiesToFetch = ["category1", "category2", "category3"]
-        fetchRequest.returnsDistinctResults = true
-        fetchRequest.resultType = .dictionaryResultType
-        
-        var results: [[String: Any]] = []
-        
+        let predicate = NSPredicate(format: "category1 == %@ OR category2 == %@ OR category3 == %@", category, category, category)
+        fetchRequest.predicate = predicate
+
         do {
-            let fetchedResults = try viewContext.fetch(fetchRequest)
-            
-            // Attempt to cast, but do not force unwrap
-            if let castedResults = fetchedResults as? [[String: Any]] {
-                results = castedResults
-            } else {
-                print("Failed to cast fetched results to [[String: Any]].")
+            let results = try viewContext.fetch(fetchRequest)
+            return results
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            return nil
+        }
+    }
+
+    func deleteCard(card: FlashCard) {
+        viewContext.delete(card)
+        do {try viewContext.save()}
+        catch {print("Error deleting card: \(error)")}
+    }
+    
+    func deleteCards(forCategory category: String, completion: @escaping (Bool) -> Void) {
+        let fetchRequest = FlashCard.createFetchRequest()
+        let predicateCategory1 = NSPredicate(format: "category1 == %@ AND category2 == nil AND category3 == nil", category)
+        let predicateCategory2 = NSPredicate(format: "category2 == %@ AND category1 == nil AND category3 == nil", category)
+        let predicateCategory3 = NSPredicate(format: "category3 == %@ AND category1 == nil AND category2 == nil", category)
+        let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [predicateCategory1, predicateCategory2, predicateCategory3])
+        fetchRequest.predicate = combinedPredicate
+
+        do {
+            let cardsToDelete = try viewContext.fetch(fetchRequest)
+            for card in cardsToDelete {deleteCard(card: card)}
+            completion(true) // Indicate successful deletion with `true`
+        } catch {
+            print("Error fetching cards to delete: \(error)")
+            completion(false) // Indicate failure with `false`
+        }
+    }
+
+    func fetchAllDistinctCategories() -> Set<String> {
+        let category1Values = fetchDistinctValuesFor(attribute: "category1")
+        let category2Values = fetchDistinctValuesFor(attribute: "category2")
+        let category3Values = fetchDistinctValuesFor(attribute: "category3")
+
+        return Set(category1Values + category2Values + category3Values)
+    }
+
+    
+    func fetchDistinctValuesFor(attribute: String) -> [String] {
+        let fetchRequest = FlashCard.createFetchRequest()
+        fetchRequest.propertiesToFetch = [attribute]
+        fetchRequest.returnsDistinctResults = true
+        fetchRequest.resultType = .managedObjectResultType
+
+        var distinctStrings: [String] = []
+
+        do {
+            if let fetchedResults = try viewContext.fetch(fetchRequest) as? [FlashCard] {
+                for card in fetchedResults {
+                    if let value = card.value(forKey: attribute) as? String, value != "NaN" {
+                        distinctStrings.append(value)
+                    }
+                }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
-        return results
+
+        return distinctStrings
     }
+
+
+
 
 }
 
