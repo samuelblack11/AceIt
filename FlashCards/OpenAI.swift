@@ -27,7 +27,7 @@ class OpenAI {
 
         let systemInstruction = "You are a helpful assistant."
         let userQuestion = """
-        Given the category: \(category), create a JSON formatted list of dictionary entries for quizzing. Each dictionary should have a 'prompt' key for the question and an 'answer' key for its corresponding answer, considering the details: \(description). The response should look like this:
+        Given the category: \(category), create a JSON formatted list of dictionary entries for quizzing. Each dictionary should have a 'prompt' key for the question and an 'answer' key for its corresponding answer, considering the details: \(description). Each prompt must be distinct from the others so that there is only one clear answer to that prompt. The response should look like this:
         [
             {"prompt": "Question 1?", "answer": "Answer 1"},
             {"prompt": "Question 2?", "answer": "Answer 2"},
@@ -54,13 +54,11 @@ class OpenAI {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             print("%%%%")
-            if let httpResponse = response as? HTTPURLResponse {
-                print("Status Code: \(httpResponse.statusCode)")
-                print("\(httpResponse)")
-            }
-            print(response)
+            if let httpResponse = response as? HTTPURLResponse {print("Status Code: \(httpResponse.statusCode)")}
             DispatchQueue.main.async {
                 if let error = error {
+                    print("ERROR")
+                    print(error.localizedDescription)
                     completion(nil, error)
                     return
                 }
@@ -70,19 +68,57 @@ class OpenAI {
                     return
                 }
                 do {
-                    if let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-                       let responses = jsonResponse["choices"] as? [[String: Any]],
-                       let assistantMessage = responses.first?["message"] as? [String: Any],
-                       let text = assistantMessage["content"] as? String,
-                       let parsedData = text.data(using: .utf8),
-                       let parsedResponse = try? JSONSerialization.jsonObject(with: parsedData) as? [[String: String]] {
-                        completion(parsedResponse, nil)
-                    } else {
-                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error parsing response"]))
+                    print("Do Statement")
+                    print(data)
+
+                    // Step 1: Convert data to dictionary
+                    guard let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                        print("Failed to convert data to JSON dictionary")
+                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to convert data to JSON dictionary"]))
+                        return
                     }
+
+                    // Print raw JSON response for debugging
+                    print("Raw JSON Response:")
+                    print(jsonResponse)
+
+                    // Step 2: Extract 'choices' array from dictionary
+                    guard let responses = jsonResponse["choices"] as? [[String: Any]] else {
+                        print("Failed to extract 'choices' array")
+                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to extract 'choices' array"]))
+                        return
+                    }
+
+                    // Step 3: Extract 'message' dictionary from first item in 'choices' array
+                    guard let assistantMessage = responses.first?["message"] as? [String: Any] else {
+                        print("Failed to extract 'message' from first choice")
+                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to extract 'message' from first choice"]))
+                        return
+                    }
+
+                    // Step 4: Extract 'content' string from 'message' dictionary
+                    guard let text = assistantMessage["content"] as? String else {
+                        print("Failed to extract 'content' string")
+                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to extract 'content' string"]))
+                        return
+                    }
+
+                    // Step 5: Convert the 'content' string back to data, then to a dictionary
+                    guard let parsedData = text.data(using: .utf8),
+                          let parsedResponse = try? JSONSerialization.jsonObject(with: parsedData) as? [[String: String]] else {
+                        print("Failed to parse content text")
+                        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to parse content text"]))
+                        return
+                    }
+
+                    print("Parsed Response:")
+                    print(parsedResponse)
+                    completion(parsedResponse, nil)
+
                 } catch {
                     completion(nil, error)
                 }
+
             }
         }
         

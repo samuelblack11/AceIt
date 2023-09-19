@@ -16,7 +16,7 @@ struct MyStacks: View {
     @EnvironmentObject var appState: AppState
     @State private var showFlashCard: Bool = false
     @State private var selectedCategory: String?
-    @State private var chosenStack: [FlashCard] = []
+    @State private var chosenStack: IdentifiableFlashCards?
     @EnvironmentObject var alertVars: AlertVars
     @State private var stackToDelete: String = ""
 
@@ -43,10 +43,8 @@ struct MyStacks: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                         .shadow(radius: 10)
                                         .onTapGesture {
-                                            self.selectedCategory = stack
                                             if let validStack = fetchFlashCards(withCategory: stack) {
-                                                chosenStack = validStack
-                                                self.showFlashCard = true
+                                                chosenStack = IdentifiableFlashCards(cards: validStack)
                                             }
                                         }
                                     Text(stack)
@@ -69,11 +67,12 @@ struct MyStacks: View {
                                 }
                             }
                         }
-                        .sheet(isPresented: $showFlashCard) {
-                            FlashCardListView(flashCards: chosenStack)
+                        .sheet(item: $chosenStack) { identifiableStack in
+                            FlashCardListView(flashCards: identifiableStack.cards)
                         }
                     }
                 }
+                Spacer()
             }
             .onAppear {fetchDistinctCategories()}
         }

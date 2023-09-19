@@ -42,6 +42,7 @@ struct MainMenu: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .background(Color.yellow)
                         }
+                        .disabled(true)
                     }
                 }
             }

@@ -43,6 +43,12 @@ enum TitleContent {
     case image(String)
 }
 
+struct IdentifiableFlashCards: Identifiable {
+    let id = UUID()
+    let cards: [FlashCard]
+}
+
+
 struct CustomNavigationBar: View {
     var onBackButtonTap: (() -> Void)?
     var titleContent: TitleContent
