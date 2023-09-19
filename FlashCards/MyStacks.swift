@@ -12,7 +12,7 @@ struct MyStacks: View {
     // This is just a sample data for the grid.
     // In your actual implementation, you'd replace this with data fetched from Core Data.
     @Environment(\.managedObjectContext) private var viewContext
-    @State private var distinctCategories: [String] = []
+    @State private var distinctCategories: [CardCategory] = []
     @EnvironmentObject var appState: AppState
     @State private var showFlashCard: Bool = false
     @State private var selectedCategory: String?
@@ -35,36 +35,25 @@ struct MyStacks: View {
                         LazyVGrid(columns: gridLayout, spacing: 20) {
                             ForEach(distinctCategories, id: \.self) { stack in
                                 VStack {
-                                    Image(systemName: "square.stack")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding()
-                                        .background(Color.gray)
-                                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                                        .shadow(radius: 10)
+                                    CategoryImage(catImage: stack.catImage)
                                         .onTapGesture {
-                                            if let validStack = fetchFlashCards(withCategory: stack) {
+                                            if let validStack = fetchFlashCards(withCategory: stack.catName!) {
                                                 chosenStack = IdentifiableFlashCards(cards: validStack)
                                             }
                                         }
-                                    Text(stack)
+                                    Text(stack.catName!)
                                 }
                                 .padding()
                                 .contextMenu {
-                                    Button(action: {
-                                        // Present the CardListView (this is already done with tap)
-                                    }) {
-                                        Label("View Cards", systemImage: "eye.fill")
-                                    }
-                                    Button(action: {
-                                        stackToDelete = stack
+                                    StackContextMenu(stackName: stack.catName!, onViewCards: {
+                                        // your logic for viewing cards here
+                                    }, onDeleteStack: {
+                                        stackToDelete = stack.catName!
                                         alertVars.alertType = .verifyStackDelete
                                         alertVars.activateAlert = true
-                                    }) {
-                                        Label("Delete Stack", systemImage: "trash.fill")
-                                    }
-                                    .foregroundColor(.red)
+                                    })
                                 }
+
                             }
                         }
                         .sheet(item: $chosenStack) { identifiableStack in
@@ -76,17 +65,77 @@ struct MyStacks: View {
             }
             .onAppear {fetchDistinctCategories()}
         }
-        .modifier(AlertViewMod(showAlert: alertVars.activateAlertBinding, activeAlert: alertVars.alertType, alertDismissAction: {self.deleteCards(forCategory: stackToDelete) { didDelete in fetchAllDistinctCategories()}}))
+        .modifier(AlertViewMod(showAlert: alertVars.activateAlertBinding, activeAlert: alertVars.alertType, alertDismissAction: {self.deleteCards(forCategory: stackToDelete) { didDelete in fetchDistinctCategories()}}))
     }
     
     private func fetchDistinctCategories() {
-        let results = fetchAllDistinctCategories()
-        self.distinctCategories = Array(results)
+        let results = fetchCategories()
+        self.distinctCategories = results
     }
+    
+    
     
 }
 
+
+struct CategoryImage: View {
+    var catImage: Data?
+    
+    var body: some View {
+        if let imgData = catImage, let uiImage = UIImage(data: imgData) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFit()
+                .padding()
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .shadow(radius: 10)
+        } else {
+            Image(systemName: "square.stack")
+                .resizable()
+                .scaledToFit()
+                .padding()
+                .background(Color.gray)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .shadow(radius: 5)
+        }
+    }
+}
+
+struct StackContextMenu: View {
+    var stackName: String
+    var onViewCards: () -> Void
+    var onDeleteStack: () -> Void
+
+    var body: some View {
+        VStack {
+            Button(action: onViewCards) {
+                Label("View Cards", systemImage: "eye.fill")
+            }
+            Button(action: onDeleteStack) {
+                Label("Delete Stack", systemImage: "trash.fill")
+            }
+            .foregroundColor(.red)
+        }
+    }
+}
+
+
+
+
 extension MyStacks {
+    
+    
+    func fetchCategories() -> [CardCategory] {
+        let fetchRequest = CardCategory.createFetchRequest()
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            return results
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            return []
+        }
+    }
+    
     
     func fetchFlashCards(withCategory category: String) -> [FlashCard]? {
         let fetchRequest = FlashCard.createFetchRequest()
@@ -108,6 +157,25 @@ extension MyStacks {
         catch {print("Error deleting card: \(error)")}
     }
     
+    func deleteCategory(withName name: String) {
+        let fetchRequest = CardCategory.createFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "catName == %@", name)
+
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let categoryToDelete = results.first {
+                viewContext.delete(categoryToDelete)
+                try viewContext.save()
+            } else {
+                print("Category with name \(name) not found.")
+            }
+        } catch {
+            print("Error deleting category: \(error)")
+        }
+    }
+
+    
+    
     func deleteCards(forCategory category: String, completion: @escaping (Bool) -> Void) {
         let fetchRequest = FlashCard.createFetchRequest()
         let predicateCategory1 = NSPredicate(format: "category1 == %@ AND category2 == nil AND category3 == nil", category)
@@ -119,6 +187,8 @@ extension MyStacks {
         do {
             let cardsToDelete = try viewContext.fetch(fetchRequest)
             for card in cardsToDelete {deleteCard(card: card)}
+            deleteCategory(withName: category)
+            fetchCategories()
             completion(true) // Indicate successful deletion with `true`
         } catch {
             print("Error fetching cards to delete: \(error)")

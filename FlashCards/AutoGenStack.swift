@@ -77,14 +77,26 @@ struct CategoryForm: View {
                     print("***")
                     print(key)
                     print(val)
-                    saveEntryToCore(prompt: key, answer: val)
+                    saveCardToCore(prompt: key, answer: val)
+                }
+                OpenAI.shared.generateCategoryImage(prompt: categoryName) { (imageData, error) in
+                    saveCategoryToCore(catName: categoryName, image: imageData)
                 }
             }
         }
     }
 
     
-    func saveEntryToCore(prompt: String, answer: String) {
+    
+    func saveCategoryToCore(catName: String, image: Data?) {
+        let category = CardCategory(context: viewContext)
+        category.catName = categoryName
+        category.catImage = image!
+        do {try viewContext.save()}
+        catch {print("Error saving dummy item: \(error)")}
+    }
+    
+    func saveCardToCore(prompt: String, answer: String) {
         let flashCard = FlashCard(context: viewContext)
         flashCard.category1 = categoryName
         flashCard.prompt = prompt

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C227B1E82AB2825600F6A967 /* FlashCard+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C227B1E62AB2825600F6A967 /* FlashCard+CoreDataClass.swift */; };
 		C227B1E92AB2825600F6A967 /* FlashCard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */; };
+		C243AD972ABA60A8008D695D /* CardCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */; };
 		C25907DC2A9283960034CD22 /* FlashCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25907DB2A9283960034CD22 /* FlashCardsApp.swift */; };
 		C25907DE2A9283960034CD22 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25907DD2A9283960034CD22 /* Persistence.swift */; };
 		C25907E12A9283960034CD22 /* FlashCards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C25907DF2A9283960034CD22 /* FlashCards.xcdatamodeld */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		C227B1E62AB2825600F6A967 /* FlashCard+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C25907D82A9283960034CD22 /* FlashCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25907DB2A9283960034CD22 /* FlashCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardsApp.swift; sourceTree = "<group>"; };
 		C25907DD2A9283960034CD22 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		C25907CF2A9283960034CD22 = {
 			isa = PBXGroup;
 			children = (
+				C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */,
 				C227B1E62AB2825600F6A967 /* FlashCard+CoreDataClass.swift */,
 				C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */,
 				C25907DA2A9283960034CD22 /* FlashCards */,
@@ -181,6 +184,7 @@
 				C25907F02A9284080034CD22 /* CustomDataTypes.swift in Sources */,
 				C25907DC2A9283960034CD22 /* FlashCardsApp.swift in Sources */,
 				C2E08FA72AB28FFF0014AE7C /* MyStacks.swift in Sources */,
+				C243AD972ABA60A8008D695D /* CardCategory+CoreDataProperties.swift in Sources */,
 				C25907DE2A9283960034CD22 /* Persistence.swift in Sources */,
 				C2E08FA32AB28DEE0014AE7C /* AppState.swift in Sources */,
 				C227B1E82AB2825600F6A967 /* FlashCard+CoreDataClass.swift in Sources */,

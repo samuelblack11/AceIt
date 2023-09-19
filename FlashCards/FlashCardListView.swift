@@ -28,7 +28,7 @@ struct FlashCardListView: View {
     var body: some View {
         if questionsAttempted == flashCards.count {
             VStack {
-                CustomNavigationBar(onBackButtonTap: {self.presentationMode.wrappedValue.dismiss()}, titleContent: .text("Quiz Complete"))
+                CustomNavigationBar(onBackButtonTap: {presentationMode.wrappedValue.dismiss()}, titleContent: .text("Quiz Complete"))
                 Text("Score: \(correctCount)/\(questionsAttempted)")
                     .font(.largeTitle)
                     .padding()
@@ -53,7 +53,7 @@ struct FlashCardListView: View {
             }
         } else {
             VStack {
-                CustomNavigationBar(onBackButtonTap: {appState.currentScreen = .myStacks}, titleContent: .text("Quiz Time"))
+                CustomNavigationBar(onBackButtonTap: {presentationMode.wrappedValue.dismiss()}, titleContent: .text("Quiz Time"))
                 HStack {
                     VStack {
                         Text("Score: \(correctCount)/\(questionsAttempted)")
@@ -177,7 +177,7 @@ struct FlashCardView: View {
 
     
     func splitText(_ originalText: String) -> (String, String, String) {
-        let maxCharsPerLine = 18
+        let maxCharsPerLine = 25
         var currentIndex = originalText.startIndex
         
         let getText: () -> String = {
