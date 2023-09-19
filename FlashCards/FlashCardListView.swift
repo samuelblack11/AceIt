@@ -28,7 +28,7 @@ struct FlashCardListView: View {
     var body: some View {
         if questionsAttempted == flashCards.count {
             VStack {
-                CustomNavigationBar(onBackButtonTap: {appState.currentScreen = .myStacks}, titleContent: .text("Quiz Complete"))
+                CustomNavigationBar(onBackButtonTap: {self.presentationMode.wrappedValue.dismiss()}, titleContent: .text("Quiz Complete"))
                 Text("Score: \(correctCount)/\(questionsAttempted)")
                     .font(.largeTitle)
                     .padding()
@@ -70,34 +70,59 @@ struct FlashCardListView: View {
                 
                 // Correct/Incorrect Buttons
                 HStack {
-                    Button("Incorrect") {
+                    Spacer() // This spacer pushes the buttons to the center
+                    
+                    Button(action: {
                         userResponse = .incorrect
                         questionsAttempted += 1
+                    }) {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(userResponse == .incorrect ? .white : .red)
+                            .background(
+                                Circle()
+                                    .fill(userResponse == .incorrect ? Color.red : Color.clear)
+                                    .frame(width: 40, height: 40)
+                            )
                     }
                     .disabled(userResponse != nil)
-                    
-                    Spacer()
-                    
-                    Button("Correct") {
+                    .padding() // Add padding for some space between the buttons
+
+                    Button(action: {
                         userResponse = .correct
                         correctCount += 1
                         questionsAttempted += 1
+                    }) {
+                        Image(systemName: "checkmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(userResponse == .correct ? .white : .green)
+                            .background(
+                                Circle()
+                                    .fill(userResponse == .correct ? Color.green : Color.clear)
+                                    .frame(width: 40, height: 40)
+                            )
                     }
                     .disabled(userResponse != nil)
+                    .padding()
+
+                    Spacer() // This spacer pushes the buttons to the center
                 }
                 .padding()
-                
                 HStack {
-                    Button("Previous") {
-                        if currentIndex > 0 {
-                            currentIndex -= 1
-                            userResponse = nil // reset user response when changing card
-                            showingAnswer = false // Ensure the prompt is displayed
-                        }
-                    }
-                    .disabled(currentIndex == 0)
+                   // Button("Previous") {
+                    //    if currentIndex > 0 {
+                    //        currentIndex -= 1
+                    //        userResponse = nil // reset user response when changing card
+                    //        showingAnswer = false // Ensure the prompt is displayed
+                    //    }
+                    //}
+                    //.disabled(currentIndex == 0)
                     
-                    Spacer()
+                    //Spacer()
                     
                     Button("Next") {
                         if currentIndex < flashCards.count - 1 {
@@ -115,29 +140,86 @@ struct FlashCardListView: View {
     }
 }
 
-
 struct FlashCardView: View {
     var flashCard: FlashCard
     @Binding var showingAnswer: Bool
 
     var body: some View {
-        ZStack {
+        let textToShow = showingAnswer ? flashCard.answer! : flashCard.prompt!
+        let (text1, text2, text3) = splitText(textToShow)
+
+        return ZStack {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.white)
                 .shadow(radius: 10)
-            
-            // Display either prompt or answer based on the showAnswer state
-            Text(showingAnswer ? flashCard.answer! : flashCard.prompt!)
-                .font(.title)
-                .padding()
-        }
-        .frame(width: 300, height: 200)
-        .onTapGesture {
-            withAnimation {
-                showingAnswer.toggle()
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.blue.opacity(0.5), lineWidth: 2) // Light blue border
+
+            VStack(spacing: 10) { // Adjust this value if you need more/less space between text and lines
+                Spacer() // Pushes content to the center
+                Text(text1)
+                    .font(.title)
+                Line()
+                Text(text2)
+                    .font(.title)
+                Line()
+                Text(text3)
+                    .font(.title)
+                Spacer() // Pushes content to the center
             }
+            .padding(.vertical, 10) // Ensure it doesn't touch the top/bottom
+        }
+        .frame(width: UIScreen.screenWidth/1.1, height: 200)
+        .onTapGesture {
+            withAnimation {showingAnswer.toggle()}
+        }
+    }
+
+    
+    func splitText(_ originalText: String) -> (String, String, String) {
+        let maxCharsPerLine = 18
+        var currentIndex = originalText.startIndex
+        
+        let getText: () -> String = {
+            if currentIndex < originalText.endIndex {
+                let tentativeEndIndex = originalText.index(currentIndex, offsetBy: maxCharsPerLine, limitedBy: originalText.endIndex) ?? originalText.endIndex
+
+                // If we're not at the end of the string and the next character isn't a space, backtrack to the last space
+                var adjustedEndIndex = tentativeEndIndex
+                if tentativeEndIndex < originalText.endIndex && originalText[tentativeEndIndex] != " " {
+                    adjustedEndIndex = originalText[..<tentativeEndIndex].lastIndex(of: " ") ?? tentativeEndIndex
+                }
+
+                return String(originalText[currentIndex..<adjustedEndIndex])
+            }
+            return ""
+        }
+
+        if originalText.count <= maxCharsPerLine {
+            return ("", originalText, "")
+        } else {
+            let text1 = getText()
+            currentIndex = originalText.index(currentIndex, offsetBy: min(text1.count, maxCharsPerLine))
+
+            let text2 = getText()
+            currentIndex = originalText.index(currentIndex, offsetBy: min(text2.count, maxCharsPerLine))
+
+            let text3 = getText()
+
+            return (text1, text2, text3)
         }
     }
 }
 
 
+
+
+
+// Custom view for lines
+struct Line: View {
+    var body: some View {
+        Rectangle()
+            .fill(Color.blue.opacity(0.5)) // Light blue color for the line
+            .frame(height: 1)
+    }
+}
