@@ -22,6 +22,7 @@ struct FlashCardListView: View {
     @State private var questionsAttempted: Int = 0
     @State private var showingAnswer: Bool = false
     @EnvironmentObject var appState: AppState
+    @State private var cardHeight: CGFloat = 125
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -65,9 +66,10 @@ struct FlashCardListView: View {
                         .font(.headline)
                 }
                 .padding()
-                
-                FlashCardView(flashCard: flashCards[currentIndex], showingAnswer: $showingAnswer)
-                
+                Spacer()
+                FlashCardView(flashCard: flashCards[currentIndex], showingAnswer: $showingAnswer, cardHeight: $cardHeight)
+                    .frame(width: UIScreen.main.bounds.width/1.1, height: cardHeight)
+                Spacer()
                 // Correct/Incorrect Buttons
                 HStack {
                     Spacer() // This spacer pushes the buttons to the center
@@ -140,80 +142,6 @@ struct FlashCardListView: View {
     }
 }
 
-struct FlashCardView: View {
-    var flashCard: FlashCard
-    @Binding var showingAnswer: Bool
-
-    var body: some View {
-        let textToShow = showingAnswer ? flashCard.answer! : flashCard.prompt!
-        let (text1, text2, text3) = splitText(textToShow)
-
-        return ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
-                .shadow(radius: 10)
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.blue.opacity(0.5), lineWidth: 2) // Light blue border
-
-            VStack(spacing: 10) { // Adjust this value if you need more/less space between text and lines
-                Spacer() // Pushes content to the center
-                Text(text1)
-                    .font(.title)
-                Line()
-                Text(text2)
-                    .font(.title)
-                Line()
-                Text(text3)
-                    .font(.title)
-                Spacer() // Pushes content to the center
-            }
-            .padding(.vertical, 10) // Ensure it doesn't touch the top/bottom
-        }
-        .frame(width: UIScreen.screenWidth/1.1, height: 200)
-        .onTapGesture {
-            withAnimation {showingAnswer.toggle()}
-        }
-    }
-
-    
-    func splitText(_ originalText: String) -> (String, String, String) {
-        let maxCharsPerLine = 25
-        var currentIndex = originalText.startIndex
-        
-        let getText: () -> String = {
-            if currentIndex < originalText.endIndex {
-                let tentativeEndIndex = originalText.index(currentIndex, offsetBy: maxCharsPerLine, limitedBy: originalText.endIndex) ?? originalText.endIndex
-
-                // If we're not at the end of the string and the next character isn't a space, backtrack to the last space
-                var adjustedEndIndex = tentativeEndIndex
-                if tentativeEndIndex < originalText.endIndex && originalText[tentativeEndIndex] != " " {
-                    adjustedEndIndex = originalText[..<tentativeEndIndex].lastIndex(of: " ") ?? tentativeEndIndex
-                }
-
-                return String(originalText[currentIndex..<adjustedEndIndex])
-            }
-            return ""
-        }
-
-        if originalText.count <= maxCharsPerLine {
-            return ("", originalText, "")
-        } else {
-            let text1 = getText()
-            currentIndex = originalText.index(currentIndex, offsetBy: min(text1.count, maxCharsPerLine))
-
-            let text2 = getText()
-            currentIndex = originalText.index(currentIndex, offsetBy: min(text2.count, maxCharsPerLine))
-
-            let text3 = getText()
-
-            return (text1, text2, text3)
-        }
-    }
-}
-
-
-
-
 
 // Custom view for lines
 struct Line: View {
@@ -221,5 +149,77 @@ struct Line: View {
         Rectangle()
             .fill(Color.blue.opacity(0.5)) // Light blue color for the line
             .frame(height: 1)
+    }
+}
+
+struct FlashCardView: View {
+    var flashCard: FlashCard
+    @Binding var showingAnswer: Bool
+    @Binding var cardHeight: CGFloat
+
+    var body: some View {
+        let textToShow = showingAnswer ? flashCard.answer! : flashCard.prompt!
+        let lines = splitText(textToShow)
+        let spacing = (cardHeight - 5) / 6 // Considering 5 lines and 6 spaces
+
+        return ZStack {
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+                .shadow(radius: 10)
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.blue.opacity(0.5), lineWidth: 2)
+
+            VStack(alignment: .center, spacing: spacing) {
+                ForEach(0..<5) { index in
+                    Group {
+                        if index < lines.count && !lines[index].isEmpty {
+                            Text(lines[index])
+                                .font(.title)
+                                .frame(height: spacing)
+                                .padding(.top, index == 0 ? spacing : 0)
+                                .padding(.bottom, index == lines.count - 1 ? spacing : 0)
+                        }
+                        else {Spacer().frame(height: spacing)}
+                    }
+                    if index < 4 {Line().frame(height: 1)}
+                }
+            }
+        }
+        .frame(width: UIScreen.main.bounds.width/1.1, height: cardHeight)
+        .onTapGesture { withAnimation { showingAnswer.toggle() } }
+    }
+
+    func splitText(_ originalText: String) -> [String] {
+        let words = originalText.split(separator: " ")
+        var currentLine = ""
+        var lines: [String] = []
+        
+        for word in words {
+            if currentLine.count + word.count + (currentLine.isEmpty ? 0 : 1) <= 25 {
+                currentLine += (currentLine.isEmpty ? "" : " ") + word
+            } else {
+                lines.append(currentLine)
+                currentLine = String(word)
+            }
+        }
+        
+        if !currentLine.isEmpty {
+            lines.append(currentLine)
+        }
+        
+        // Handle centering the lines
+        let numEmptySlots = 5 - lines.count
+        let numPrependedSlots = numEmptySlots / 2
+        let numAppendedSlots = numEmptySlots - numPrependedSlots
+        
+        for _ in 0..<numPrependedSlots {
+            lines.insert("", at: 0)
+        }
+        
+        for _ in 0..<numAppendedSlots {
+            lines.append("")
+        }
+        
+        return lines
     }
 }
