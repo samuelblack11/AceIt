@@ -39,7 +39,7 @@ struct CategoryForm: View {
                         }
                 }
                 Section {
-                    Button(action: submit) {Text("Submit")}
+                    Button(action: submit) {Text("Submit").frame(maxWidth: .infinity, alignment: .center)}
                         .disabled(isSubmitting)
                 }
             }

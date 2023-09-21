@@ -26,6 +26,7 @@
 		C2E08FAC2AB292B00014AE7C /* AutoGenStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */; };
 		C2E08FB12AB3D58E0014AE7C /* FlashCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */; };
 		C2E08FB42AB3DAB70014AE7C /* AlertViewMod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */; };
+		C2E6D7AD2ABBD0B000508726 /* CreateCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E6D7AC2ABBD0B000508726 /* CreateCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoGenStack.swift; sourceTree = "<group>"; };
 		C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardListView.swift; sourceTree = "<group>"; };
 		C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewMod.swift; sourceTree = "<group>"; };
+		C2E6D7AC2ABBD0B000508726 /* CreateCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				C25907F22A928CA70034CD22 /* OpenAI.swift */,
 				C2E08FA22AB28DEE0014AE7C /* AppState.swift */,
 				C2E08FA42AB28E6D0014AE7C /* MainMenu.swift */,
+				C2E6D7AC2ABBD0B000508726 /* CreateCard.swift */,
 				C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */,
 				C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */,
 				C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */,
@@ -187,6 +190,7 @@
 				C25907F02A9284080034CD22 /* CustomDataTypes.swift in Sources */,
 				C25907DC2A9283960034CD22 /* FlashCardsApp.swift in Sources */,
 				C2E08FA72AB28FFF0014AE7C /* MyStacks.swift in Sources */,
+				C2E6D7AD2ABBD0B000508726 /* CreateCard.swift in Sources */,
 				C243AD972ABA60A8008D695D /* CardCategory+CoreDataProperties.swift in Sources */,
 				C25907DE2A9283960034CD22 /* Persistence.swift in Sources */,
 				C243AD992ABA7F44008D695D /* SpeechToText.swift in Sources */,

@@ -27,7 +27,7 @@ struct ContentView: View {
                 case .autoGenerateStack:
                     CategoryForm()
                 case .manualEntryStack:
-                    MainMenu()
+                    CreateCard()
                 }
             }
         }
