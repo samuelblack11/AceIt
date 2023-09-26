@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CardCategory" representedClassName=".CardCategory" syncable="YES">
+        <attribute name="catImage" optional="YES" attributeType="Binary"/>
+        <attribute name="catName" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="FlashCard" representedClassName=".FlashCard" syncable="YES">
+        <attribute name="answer" optional="YES" attributeType="String"/>
+        <attribute name="category1" optional="YES" attributeType="String"/>
+        <attribute name="category2" optional="YES" attributeType="String"/>
+        <attribute name="category3" optional="YES" attributeType="String"/>
+        <attribute name="prompt" optional="YES" attributeType="String"/>
+    </entity>
+</model>

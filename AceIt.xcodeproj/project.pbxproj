@@ -33,7 +33,7 @@
 		C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C243AD982ABA7F44008D695D /* SpeechToText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToText.swift; sourceTree = "<group>"; };
-		C25907D82A9283960034CD22 /* Ace It.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ace It.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C25907D82A9283960034CD22 /* AceIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AceIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25907DB2A9283960034CD22 /* AceItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AceItApp.swift; sourceTree = "<group>"; };
 		C25907DD2A9283960034CD22 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		C25907E02A9283960034CD22 /* FlashCards.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FlashCards.xcdatamodel; sourceTree = "<group>"; };
@@ -43,6 +43,7 @@
 		C25907E82A9283980034CD22 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C25907EF2A9284080034CD22 /* CustomDataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDataTypes.swift; sourceTree = "<group>"; };
 		C25907F22A928CA70034CD22 /* OpenAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
+		C2790C5A2AC274ED00C37DE8 /* AceIt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AceIt.xcdatamodel; sourceTree = "<group>"; };
 		C2E08FA22AB28DEE0014AE7C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C2E08FA42AB28E6D0014AE7C /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStacks.swift; sourceTree = "<group>"; };
@@ -70,7 +71,7 @@
 				C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */,
 				C227B1E62AB2825600F6A967 /* FlashCard+CoreDataClass.swift */,
 				C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */,
-				C25907DA2A9283960034CD22 /* Ace It */,
+				C25907DA2A9283960034CD22 /* AceIt */,
 				C25907D92A9283960034CD22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,12 +79,12 @@
 		C25907D92A9283960034CD22 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C25907D82A9283960034CD22 /* Ace It.app */,
+				C25907D82A9283960034CD22 /* AceIt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C25907DA2A9283960034CD22 /* Ace It */ = {
+		C25907DA2A9283960034CD22 /* AceIt */ = {
 			isa = PBXGroup;
 			children = (
 				C25907DB2A9283960034CD22 /* AceItApp.swift */,
@@ -103,7 +104,7 @@
 				C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */,
 				C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */,
 			);
-			path = "Ace It";
+			path = AceIt;
 			sourceTree = "<group>";
 		};
 		C25907E72A9283980034CD22 /* Preview Content */ = {
@@ -117,9 +118,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C25907D72A9283960034CD22 /* Ace It */ = {
+		C25907D72A9283960034CD22 /* AceIt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "Ace It" */;
+			buildConfigurationList = C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "AceIt" */;
 			buildPhases = (
 				C25907D42A9283960034CD22 /* Sources */,
 				C25907D52A9283960034CD22 /* Frameworks */,
@@ -129,9 +130,9 @@
 			);
 			dependencies = (
 			);
-			name = "Ace It";
+			name = AceIt;
 			productName = Inflated;
-			productReference = C25907D82A9283960034CD22 /* Ace It.app */;
+			productReference = C25907D82A9283960034CD22 /* AceIt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -149,7 +150,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C25907D32A9283960034CD22 /* Build configuration list for PBXProject "Ace It" */;
+			buildConfigurationList = C25907D32A9283960034CD22 /* Build configuration list for PBXProject "AceIt" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -162,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C25907D72A9283960034CD22 /* Ace It */,
+				C25907D72A9283960034CD22 /* AceIt */,
 			);
 		};
 /* End PBXProject section */
@@ -321,10 +322,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Ace It/AceIt.entitlements";
+				CODE_SIGN_ENTITLEMENTS = AceIt/AceIt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Ace It/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AceIt/Preview Content\"";
 				DEVELOPMENT_TEAM = 9AVZUF22VY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -361,10 +362,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Ace It/AceIt.entitlements";
+				CODE_SIGN_ENTITLEMENTS = AceIt/AceIt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Ace It/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AceIt/Preview Content\"";
 				DEVELOPMENT_TEAM = 9AVZUF22VY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -399,7 +400,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C25907D32A9283960034CD22 /* Build configuration list for PBXProject "Ace It" */ = {
+		C25907D32A9283960034CD22 /* Build configuration list for PBXProject "AceIt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25907EA2A9283980034CD22 /* Debug */,
@@ -408,7 +409,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "Ace It" */ = {
+		C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "AceIt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25907ED2A9283980034CD22 /* Debug */,
@@ -423,9 +424,10 @@
 		C25907DF2A9283960034CD22 /* AceIt.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				C2790C5A2AC274ED00C37DE8 /* AceIt.xcdatamodel */,
 				C25907E02A9283960034CD22 /* FlashCards.xcdatamodel */,
 			);
-			currentVersion = C25907E02A9283960034CD22 /* FlashCards.xcdatamodel */;
+			currentVersion = C2790C5A2AC274ED00C37DE8 /* AceIt.xcdatamodel */;
 			path = AceIt.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
