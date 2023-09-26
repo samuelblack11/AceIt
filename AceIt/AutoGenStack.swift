@@ -87,7 +87,7 @@ struct CategoryForm: View {
     func saveCategoryToCore(catName: String, image: Data?) {
         let category = CardCategory(context: viewContext)
         category.catName = categoryName
-        category.catImage = image!
+        category.catImage = image
         do {try viewContext.save()}
         catch {print("Error saving dummy item: \(error)")}
     }

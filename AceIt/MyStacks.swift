@@ -72,15 +72,16 @@ struct MyStacks: View {
         let results = fetchCategories()
         self.distinctCategories = results
     }
-    
-    
-    
 }
 
 
 struct CategoryImage: View {
     var catImage: Data?
-    
+    var columnWidth: CGFloat {
+        // Assuming padding or spacing is not factored here
+        // If you have padding or spacing, adjust accordingly
+        return (UIScreen.main.bounds.width / 2) - 10 // 10 is just a buffer, can be adjusted
+    }
     var body: some View {
         if let imgData = catImage, let uiImage = UIImage(data: imgData) {
             Image(uiImage: uiImage)
@@ -89,6 +90,7 @@ struct CategoryImage: View {
                 .padding()
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .shadow(radius: 10)
+                .frame(width: columnWidth, height: columnWidth)
         } else {
             Image(systemName: "square.stack")
                 .resizable()
@@ -97,6 +99,7 @@ struct CategoryImage: View {
                 .background(Color.gray)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .shadow(radius: 5)
+                .frame(width: columnWidth, height: columnWidth)
         }
     }
 }
