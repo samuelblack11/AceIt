@@ -1,6 +1,6 @@
 //
 //  CreateCard.swift
-//  FlashCards
+//  Ace It
 //
 //  Created by Sam Black on 9/20/23.
 //
@@ -12,7 +12,7 @@ struct CreateCard: View {
     @State private var categoryName: String = ""
     @State private var prompt: String = ""
     @State private var answer: String = ""
-
+    @State private var isTextBlank: Bool = true
     @State private var description: String = "Describe your category in more detail here"
     @State private var didEditAnswer: Bool = false // A flag to check if the description has been edited
     @Environment(\.managedObjectContext) private var viewContext
@@ -29,15 +29,18 @@ struct CreateCard: View {
                     // Category Field
                     TextField("Category", text: $categoryName)
                         .disabled(isSubmitting)
-                    
+                        .onChange(of: categoryName) { _ in updateIsTextBlank()}
+
                     // Prompt Field
                     TextField("Prompt", text: $prompt)
                         .disabled(isSubmitting)
                         .frame(height: 50)
+                        .onChange(of: prompt) { _ in updateIsTextBlank()}
 
                     // Answer Field
                     TextField("Answer", text: $answer)
                         .disabled(isSubmitting)
+                        .onChange(of: answer) { _ in updateIsTextBlank()}
                         .frame(height: 50)
                         .foregroundColor(didEditAnswer ? .primary : .gray)
                         .onTapGesture {
@@ -57,7 +60,7 @@ struct CreateCard: View {
                 }
                 Section {
                     Button(action: submit) {Text("Submit").frame(maxWidth: .infinity, alignment: .center)}
-                        .disabled(isSubmitting)
+                        .disabled(isTextBlank || isSubmitting)
                 }
             }
             .overlay(
@@ -72,8 +75,9 @@ struct CreateCard: View {
         }
     }
 
-    
-    
+    func updateIsTextBlank() {
+        isTextBlank = categoryName.isEmpty || prompt.isEmpty || answer.isEmpty || (!didEditAnswer && (answer == "Answer" || prompt == "Prompt" || categoryName == "Category"))
+    }
     
     func submit() {
         isSubmitting = true

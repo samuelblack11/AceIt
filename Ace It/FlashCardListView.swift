@@ -1,6 +1,6 @@
 //
 //  FlashCardListView.swift
-//  FlashCards
+//  Ace It
 //
 //  Created by Sam Black on 9/14/23.
 //
@@ -152,7 +152,7 @@ struct QuizComplete: View {
             }
             .padding()
 
-            Button("Return to MyStacks") {
+            Button("Return to My Stacks") {
                 presentationMode.wrappedValue.dismiss()
             }
             .padding()

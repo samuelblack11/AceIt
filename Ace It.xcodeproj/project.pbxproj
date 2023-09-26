@@ -11,9 +11,9 @@
 		C227B1E92AB2825600F6A967 /* FlashCard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */; };
 		C243AD972ABA60A8008D695D /* CardCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */; };
 		C243AD992ABA7F44008D695D /* SpeechToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C243AD982ABA7F44008D695D /* SpeechToText.swift */; };
-		C25907DC2A9283960034CD22 /* FlashCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25907DB2A9283960034CD22 /* FlashCardsApp.swift */; };
+		C25907DC2A9283960034CD22 /* AceItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25907DB2A9283960034CD22 /* AceItApp.swift */; };
 		C25907DE2A9283960034CD22 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25907DD2A9283960034CD22 /* Persistence.swift */; };
-		C25907E12A9283960034CD22 /* FlashCards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C25907DF2A9283960034CD22 /* FlashCards.xcdatamodeld */; };
+		C25907E12A9283960034CD22 /* AceIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C25907DF2A9283960034CD22 /* AceIt.xcdatamodeld */; };
 		C25907E32A9283960034CD22 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25907E22A9283960034CD22 /* ContentView.swift */; };
 		C25907E52A9283980034CD22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25907E42A9283980034CD22 /* Assets.xcassets */; };
 		C25907E92A9283980034CD22 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25907E82A9283980034CD22 /* Preview Assets.xcassets */; };
@@ -22,7 +22,6 @@
 		C2E08FA32AB28DEE0014AE7C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FA22AB28DEE0014AE7C /* AppState.swift */; };
 		C2E08FA52AB28E6D0014AE7C /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FA42AB28E6D0014AE7C /* MainMenu.swift */; };
 		C2E08FA72AB28FFF0014AE7C /* MyStacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */; };
-		C2E08FA92AB290070014AE7C /* NewStacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FA82AB290070014AE7C /* NewStacks.swift */; };
 		C2E08FAC2AB292B00014AE7C /* AutoGenStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */; };
 		C2E08FB12AB3D58E0014AE7C /* FlashCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */; };
 		C2E08FB42AB3DAB70014AE7C /* AlertViewMod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */; };
@@ -34,20 +33,19 @@
 		C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C243AD982ABA7F44008D695D /* SpeechToText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToText.swift; sourceTree = "<group>"; };
-		C25907D82A9283960034CD22 /* FlashCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C25907DB2A9283960034CD22 /* FlashCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardsApp.swift; sourceTree = "<group>"; };
+		C25907D82A9283960034CD22 /* Ace It.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ace It.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C25907DB2A9283960034CD22 /* AceItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AceItApp.swift; sourceTree = "<group>"; };
 		C25907DD2A9283960034CD22 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		C25907E02A9283960034CD22 /* FlashCards.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FlashCards.xcdatamodel; sourceTree = "<group>"; };
 		C25907E22A9283960034CD22 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C25907E42A9283980034CD22 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C25907E62A9283980034CD22 /* FlashCards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlashCards.entitlements; sourceTree = "<group>"; };
+		C25907E62A9283980034CD22 /* AceIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AceIt.entitlements; sourceTree = "<group>"; };
 		C25907E82A9283980034CD22 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C25907EF2A9284080034CD22 /* CustomDataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDataTypes.swift; sourceTree = "<group>"; };
 		C25907F22A928CA70034CD22 /* OpenAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
 		C2E08FA22AB28DEE0014AE7C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C2E08FA42AB28E6D0014AE7C /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStacks.swift; sourceTree = "<group>"; };
-		C2E08FA82AB290070014AE7C /* NewStacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStacks.swift; sourceTree = "<group>"; };
 		C2E08FAB2AB292B00014AE7C /* AutoGenStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoGenStack.swift; sourceTree = "<group>"; };
 		C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardListView.swift; sourceTree = "<group>"; };
 		C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewMod.swift; sourceTree = "<group>"; };
@@ -72,7 +70,7 @@
 				C243AD962ABA60A8008D695D /* CardCategory+CoreDataProperties.swift */,
 				C227B1E62AB2825600F6A967 /* FlashCard+CoreDataClass.swift */,
 				C227B1E72AB2825600F6A967 /* FlashCard+CoreDataProperties.swift */,
-				C25907DA2A9283960034CD22 /* FlashCards */,
+				C25907DA2A9283960034CD22 /* Ace It */,
 				C25907D92A9283960034CD22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,20 +78,20 @@
 		C25907D92A9283960034CD22 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C25907D82A9283960034CD22 /* FlashCards.app */,
+				C25907D82A9283960034CD22 /* Ace It.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C25907DA2A9283960034CD22 /* FlashCards */ = {
+		C25907DA2A9283960034CD22 /* Ace It */ = {
 			isa = PBXGroup;
 			children = (
-				C25907DB2A9283960034CD22 /* FlashCardsApp.swift */,
+				C25907DB2A9283960034CD22 /* AceItApp.swift */,
 				C25907DD2A9283960034CD22 /* Persistence.swift */,
 				C25907E22A9283960034CD22 /* ContentView.swift */,
 				C25907E42A9283980034CD22 /* Assets.xcassets */,
-				C25907E62A9283980034CD22 /* FlashCards.entitlements */,
-				C25907DF2A9283960034CD22 /* FlashCards.xcdatamodeld */,
+				C25907E62A9283980034CD22 /* AceIt.entitlements */,
+				C25907DF2A9283960034CD22 /* AceIt.xcdatamodeld */,
 				C25907E72A9283980034CD22 /* Preview Content */,
 				C25907EF2A9284080034CD22 /* CustomDataTypes.swift */,
 				C25907F22A928CA70034CD22 /* OpenAI.swift */,
@@ -104,9 +102,8 @@
 				C2E08FA62AB28FFF0014AE7C /* MyStacks.swift */,
 				C2E08FB32AB3DAB70014AE7C /* AlertViewMod.swift */,
 				C2E08FB02AB3D58E0014AE7C /* FlashCardListView.swift */,
-				C2E08FA82AB290070014AE7C /* NewStacks.swift */,
 			);
-			path = FlashCards;
+			path = "Ace It";
 			sourceTree = "<group>";
 		};
 		C25907E72A9283980034CD22 /* Preview Content */ = {
@@ -120,9 +117,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C25907D72A9283960034CD22 /* FlashCards */ = {
+		C25907D72A9283960034CD22 /* Ace It */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "FlashCards" */;
+			buildConfigurationList = C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "Ace It" */;
 			buildPhases = (
 				C25907D42A9283960034CD22 /* Sources */,
 				C25907D52A9283960034CD22 /* Frameworks */,
@@ -132,9 +129,9 @@
 			);
 			dependencies = (
 			);
-			name = FlashCards;
+			name = "Ace It";
 			productName = Inflated;
-			productReference = C25907D82A9283960034CD22 /* FlashCards.app */;
+			productReference = C25907D82A9283960034CD22 /* Ace It.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -152,7 +149,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C25907D32A9283960034CD22 /* Build configuration list for PBXProject "FlashCards" */;
+			buildConfigurationList = C25907D32A9283960034CD22 /* Build configuration list for PBXProject "Ace It" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -165,7 +162,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C25907D72A9283960034CD22 /* FlashCards */,
+				C25907D72A9283960034CD22 /* Ace It */,
 			);
 		};
 /* End PBXProject section */
@@ -188,7 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C25907F02A9284080034CD22 /* CustomDataTypes.swift in Sources */,
-				C25907DC2A9283960034CD22 /* FlashCardsApp.swift in Sources */,
+				C25907DC2A9283960034CD22 /* AceItApp.swift in Sources */,
 				C2E08FA72AB28FFF0014AE7C /* MyStacks.swift in Sources */,
 				C2E6D7AD2ABBD0B000508726 /* CreateCard.swift in Sources */,
 				C243AD972ABA60A8008D695D /* CardCategory+CoreDataProperties.swift in Sources */,
@@ -201,10 +198,9 @@
 				C227B1E92AB2825600F6A967 /* FlashCard+CoreDataProperties.swift in Sources */,
 				C2E08FB12AB3D58E0014AE7C /* FlashCardListView.swift in Sources */,
 				C25907F32A928CA70034CD22 /* OpenAI.swift in Sources */,
-				C2E08FA92AB290070014AE7C /* NewStacks.swift in Sources */,
 				C25907E32A9283960034CD22 /* ContentView.swift in Sources */,
 				C2E08FB42AB3DAB70014AE7C /* AlertViewMod.swift in Sources */,
-				C25907E12A9283960034CD22 /* FlashCards.xcdatamodeld in Sources */,
+				C25907E12A9283960034CD22 /* AceIt.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,10 +321,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = FlashCards/FlashCards.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Ace It/AceIt.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"FlashCards/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ace It/Preview Content\"";
 				DEVELOPMENT_TEAM = 9AVZUF22VY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -348,7 +344,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.saloo.FlashCards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saloo.AceIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -365,10 +361,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = FlashCards/FlashCards.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Ace It/AceIt.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"FlashCards/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ace It/Preview Content\"";
 				DEVELOPMENT_TEAM = 9AVZUF22VY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -388,7 +384,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.saloo.FlashCards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saloo.AceIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -403,7 +399,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C25907D32A9283960034CD22 /* Build configuration list for PBXProject "FlashCards" */ = {
+		C25907D32A9283960034CD22 /* Build configuration list for PBXProject "Ace It" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25907EA2A9283980034CD22 /* Debug */,
@@ -412,7 +408,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "FlashCards" */ = {
+		C25907EC2A9283980034CD22 /* Build configuration list for PBXNativeTarget "Ace It" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25907ED2A9283980034CD22 /* Debug */,
@@ -424,13 +420,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		C25907DF2A9283960034CD22 /* FlashCards.xcdatamodeld */ = {
+		C25907DF2A9283960034CD22 /* AceIt.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				C25907E02A9283960034CD22 /* FlashCards.xcdatamodel */,
 			);
 			currentVersion = C25907E02A9283960034CD22 /* FlashCards.xcdatamodel */;
-			path = FlashCards.xcdatamodeld;
+			path = AceIt.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

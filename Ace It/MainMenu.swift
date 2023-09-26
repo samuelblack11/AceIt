@@ -1,6 +1,6 @@
 //
 //  MainMenu.swift
-//  FlashCards
+//  Ace It
 //
 //  Created by Sam Black on 9/13/23.
 //
@@ -13,7 +13,7 @@ struct MainMenu: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                CustomNavigationBar(titleContent: .text("FlashCards"), showBackButton: false)
+                CustomNavigationBar(titleContent: .text("Ace It"), showBackButton: false)
                 Spacer()
                 menuButton(action: {appState.currentScreen = .myStacks}, text: "My Stacks", symbolName: "books.vertical", bgColor: Color("PastelBlue"))
                 menuButton(action: {appState.currentScreen = .autoGenerateStack}, text: "Auto-Generate A New Stack", symbolName: "wand.and.stars", bgColor: Color("PastelGreen"))

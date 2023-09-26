@@ -1,6 +1,6 @@
 //
 //  AlertViewMod.swift
-//  FlashCards
+//  Ace It
 //
 //  Created by Sam Black on 9/14/23.
 //
@@ -24,6 +24,12 @@ struct AlertViewMod: ViewModifier {
                         message: Text(""),
                         primaryButton: .default(Text("Yes, delete it"), action: {alertDismissAction?()}),
                         secondaryButton: .default(Text("No, I'll keep it"), action: {})
+                    )
+                case .stackCreated:
+                    return Alert(
+                        title: Text("New Category Created"),
+                        message: Text("It will be available to use momentarily"),
+                        dismissButton: .default(Text("Ok"), action: {alertDismissAction?()})
                     )
             }
         }
@@ -53,5 +59,5 @@ extension View {
 }
 
 enum ActiveAlert {
-    case verifyStackDelete
+    case verifyStackDelete, stackCreated
 }

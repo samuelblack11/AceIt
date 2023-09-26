@@ -1,6 +1,6 @@
 //
 //  AutoGenStack.swift
-//  FlashCards
+//  Ace It
 //
 //  Created by Sam Black on 9/13/23.
 //
@@ -14,8 +14,10 @@ struct CategoryForm: View {
     @State private var didEditDescription: Bool = false // A flag to check if the description has been edited
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isSubmitting: Bool = false
+    @State private var isTextBlank: Bool = true
     @EnvironmentObject var appState: AppState
-    
+    @EnvironmentObject var alertVars: AlertVars
+
     var body: some View {
         VStack {
             CustomNavigationBar(onBackButtonTap: {appState.currentScreen = .mainMenu}, titleContent: .text("Create a Category"))
@@ -23,14 +25,12 @@ struct CategoryForm: View {
                 Section(header: Text("Category Details")) {
                     TextField("Category Name", text: $categoryName)
                         .disabled((isSubmitting))
+                        .onChange(of: categoryName) { _ in updateIsTextBlank()}
                     TextEditor(text: $description)
                         .disabled((isSubmitting))
+                        .onChange(of: description) { _ in updateIsTextBlank()}
                         .frame(height: 100)
                         .foregroundColor(didEditDescription ? .primary : .gray)
-                       // .overlay(
-                       //     RoundedRectangle(cornerRadius: 5)
-                       //         .stroke(Color.gray, lineWidth: 1)
-                       // )
                         .onTapGesture {
                             if !didEditDescription {
                                 description = ""
@@ -40,7 +40,7 @@ struct CategoryForm: View {
                 }
                 Section {
                     Button(action: submit) {Text("Submit").frame(maxWidth: .infinity, alignment: .center)}
-                        .disabled(isSubmitting)
+                        .disabled(isTextBlank || isSubmitting)
                 }
             }
             .overlay(
@@ -54,6 +54,11 @@ struct CategoryForm: View {
                 }
             )
         }
+        .modifier(AlertViewMod(showAlert: alertVars.activateAlertBinding, activeAlert: alertVars.alertType, alertDismissAction: {isSubmitting = false; appState.currentScreen = .mainMenu}))
+    }
+    
+    func updateIsTextBlank() {
+        isTextBlank = categoryName.isEmpty || (description.isEmpty || description == "Describe your category in more detail here" && !didEditDescription)
     }
     
     func submit() {
@@ -62,22 +67,15 @@ struct CategoryForm: View {
         print("Description: \(description)")
         
         OpenAI.shared.generateStack(category: categoryName, description: description) { (response: [[String: String]]?, error: Error?) in
-            
-            //response, error in
-            defer { isSubmitting = false; appState.currentScreen = .mainMenu }
-            
-            print("-----")
-            print(response)
-            print("-----")
+           // defer { isSubmitting = false; appState.currentScreen = .mainMenu }
             
             guard let unwrappedResponse = response else { return }
             let dictForCore = parseResponse(unwrappedResponse)
             if let unwrappedDict = dictForCore {
                 for (key, val) in unwrappedDict {
-                    print("***")
-                    print(key)
-                    print(val)
                     saveCardToCore(prompt: key, answer: val)
+                    alertVars.alertType = .stackCreated
+                    alertVars.activateAlert = true
                 }
                 OpenAI.shared.generateCategoryImage(prompt: categoryName) { (imageData, error) in
                     saveCategoryToCore(catName: categoryName, image: imageData)
@@ -85,8 +83,6 @@ struct CategoryForm: View {
             }
         }
     }
-
-    
     
     func saveCategoryToCore(catName: String, image: Data?) {
         let category = CardCategory(context: viewContext)

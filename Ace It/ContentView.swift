@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Inflated
+//  Ace It
 //
 //  Created by Sam Black on 8/20/23.
 //
@@ -33,13 +33,3 @@ struct ContentView: View {
         }
     }
 }
-
-
-//SearchBar(text: $searchText, onSubmit: {
-//    OpenAI.shared.askChatGPT(product: searchText) {
-//        analysis, error in
-//        print("CHATGPT ANALYSIS")
-//        print(error)
-//        print(analysis)
-//    }
-//})

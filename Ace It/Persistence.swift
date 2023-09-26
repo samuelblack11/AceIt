@@ -1,6 +1,6 @@
 //
 //  Persistence.swift
-//  Inflated
+//  Ace It
 //
 //  Created by Sam Black on 8/20/23.
 //
@@ -17,7 +17,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "FlashCards")
+        container = NSPersistentContainer(name: "Ace It")
 
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
