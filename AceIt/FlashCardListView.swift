@@ -190,6 +190,7 @@ struct FlashCardView: View {
                     Group {
                         if index < lines.count && !lines[index].isEmpty {
                             Text(lines[index])
+                                .foregroundColor(Color.black)
                                 .font(.title)
                                 .frame(height: spacing)
                                 .padding(.top, index == 0 ? spacing : 0)
