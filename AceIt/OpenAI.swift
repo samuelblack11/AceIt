@@ -38,6 +38,9 @@ class OpenAI {
                 ...
             ]
         }
+        
+        I want you to create a series of prompts and answers based on the category and details that I have provided. Each prompt should be unique to the corresponding answer.
+        Prompts and answers should be fact based and not opinionated. Both prompts and answers should be limited to a maximum of 125 characters. Both the prompts and answers should be concise so that a user would be able to guess the exact answer to the prompt. The answer to any given prompt should NOT be included in the prompt itself.
         """
 
         

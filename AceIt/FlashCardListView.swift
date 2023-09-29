@@ -225,10 +225,10 @@ struct FlashCardView: View {
         }
         
         // Handle centering the lines
-        let numEmptySlots = 5 - lines.count
+        let numEmptySlots = max(0, 5 - lines.count)
         let numPrependedSlots = numEmptySlots / 2
         let numAppendedSlots = numEmptySlots - numPrependedSlots
-        
+
         for _ in 0..<numPrependedSlots {
             lines.insert("", at: 0)
         }
@@ -239,4 +239,5 @@ struct FlashCardView: View {
         
         return lines
     }
+
 }

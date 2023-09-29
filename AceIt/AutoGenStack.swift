@@ -74,6 +74,7 @@ struct CategoryForm: View {
             if let unwrappedDict = dictForCore {
                 for (key, val) in unwrappedDict {
                     saveCardToCore(prompt: key, answer: val)
+                    isSubmitting = false
                     alertVars.alertType = .stackCreated
                     alertVars.activateAlert = true
                 }
@@ -109,13 +110,8 @@ struct CategoryForm: View {
                 parsedDict[key] = value
             }
         }
-
         return parsedDict.isEmpty ? nil : parsedDict
     }
-
-    
-    
-    
 }
 
 struct CategoryForm_Previews: PreviewProvider {
