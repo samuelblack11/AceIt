@@ -9,7 +9,7 @@ import Foundation
 
 class OpenAI {
     
-    var key = "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" // Replace with your API key and keep it secure.
+    var key = OpenAIConfig.key
     static let shared = OpenAI()
 
     private let baseURL = "https://api.openai.com/v1/chat/completions"
@@ -40,7 +40,7 @@ class OpenAI {
         }
         
         I want you to create a series of prompts and answers based on the category and details that I have provided. Each prompt should be unique to the corresponding answer.
-        Prompts and answers should be fact based and not opinionated. Both prompts and answers should be limited to a maximum of 125 characters. Both the prompts and answers should be concise so that a user would be able to guess the exact answer to the prompt. The answer to any given prompt should NOT be included in the prompt itself.
+        Prompts and answers should be fact based and not opinionated. Both prompts and answers should be limited to a maximum of 125 characters. Both the prompts and answers should be concise so that a user would be able to guess the exact answer to the prompt. The answer to any given prompt should NOT be included in the prompt itself. There should always bet 10 sets of prompts and answers for each series.
         """
 
         
@@ -122,6 +122,8 @@ class OpenAI {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // Request body
+        let instruction = "The image should not include any people or faces in it. The image should be focused entirely on the prompt itself."
+        let promptAndInstruction = prompt + instruction
         let requestBody: [String: Any] = [
             "prompt": prompt,
             "n": n,
