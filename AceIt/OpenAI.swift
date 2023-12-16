@@ -9,7 +9,7 @@ import Foundation
 
 class OpenAI {
     
-    var key = OpenAIConfig.key
+    var key = APIManager.shared.openAIKey
     static let shared = OpenAI()
 
     private let baseURL = "https://api.openai.com/v1/chat/completions"

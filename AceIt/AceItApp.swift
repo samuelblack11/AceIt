@@ -12,6 +12,7 @@ struct AceItApp: App {
     let persistenceController = PersistenceController.shared
     @StateObject var appState = AppState.shared
     @StateObject var alertVars = AlertVars.shared
+    @StateObject var apiManager = APIManager.shared
 
     var body: some Scene {
         WindowGroup {
@@ -19,6 +20,7 @@ struct AceItApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(appState)
                 .environmentObject(alertVars)
+                .environmentObject(apiManager)
         }
     }
 }
